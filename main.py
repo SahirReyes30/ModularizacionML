@@ -1,5 +1,5 @@
 from data_loader import DataLoader
-from preprocess import preprocess_data
+from preprocess import Preprocess
 from train_model import train_model
 from evaluate import evaluate_model
 
@@ -10,9 +10,8 @@ def main():
     dataLoader = DataLoader()
     raw_data, dataType = dataLoader.select_data()
 
-
     # Paso 2: Preprocesar datos
-
+    preprocessor = Preprocess()
     
     if dataType in ["iris", "wine", "breast_cancer", "mnist"]:
         X_train, X_test, y_train, y_test = preprocess_data(raw_data, dataType)
