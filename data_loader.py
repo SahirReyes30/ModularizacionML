@@ -1,34 +1,60 @@
 import pandas as pd
 
-def select_data():
+class DataLoader:
     """
-    Función para cargar diferentes datasets desde URLs basado en la entrada del usuario.
+    Clase para cargar datasets desde URLs.
     """
-    print("Selecciona el dataset que deseas cargar:")
-    print("1. Iris")
-    print("2. Wine")
-    print("3. Breast Cancer")
-    print("4. Mall Customers")
-    print("5. MNIST Digits")
     
-    choice = input("Introduce el número correspondiente al dataset: ").strip()
+    def __init__(self):
+        """
+        Inicializa las URLs y nombres de los datasets disponibles.
+        """
+        self.datasets = {
+            "1": {
+                "name": "iris",
+                "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data",
+                "header": None
+            },
+            "2": {
+                "name": "wine",
+                "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data",
+                "header": None
+            },
+            "3": {
+                "name": "breast_cancer",
+                "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data",
+                "header": None
+            },
+            "4": {
+                "name": "mall",
+                "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/00292/Wholesale%20customers%20data.csv",
+                "header": 0
+            },
+            "5": {
+                "name": "mnist",
+                "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tra",
+                "header": None
+            }
+        }
 
-    if choice == "1":
-        print("Cargando dataset Iris...")
-        return pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data", header=None), "iris"
-    elif choice == "2":
-        print("Cargando dataset Wine...")
-        return pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data", header=None), "wine"
-    elif choice == "3":
-        print("Cargando dataset Breast Cancer...")
-        return pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data", header=None), "breast_cancer"
-    elif choice == "4":
-        print("Cargando dataset Mall Customers...")
-        return pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/00292/Wholesale%20customers%20data.csv"), "mall"
-    elif choice == "5":
-        print("Cargando dataset MNIST Digits...")
-        return pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tra", header=None), "mnist"
-    else:
-        print("Opción no válida. Por favor, intenta de nuevo.")
-        return select_data()  # Volver a pedir la entrada
-
+    def select_data(self):
+        """
+        Solicita al usuario seleccionar un dataset y lo carga desde la URL correspondiente.
+        
+        Returns:
+            tuple: Un DataFrame con los datos cargados y el nombre del dataset.
+        """
+        while True:
+            print("Selecciona el dataset que deseas cargar:")
+            for key, dataset in self.datasets.items():
+                print(f"{key}. {dataset['name'].capitalize()}")
+            
+            choice = input("Introduce el número correspondiente al dataset: ").strip()
+            
+            if choice in self.datasets:
+                selected = self.datasets[choice]
+                print(f"Cargando dataset {selected['name'].capitalize()}...")
+                data = pd.read_csv(selected["url"], header=selected["header"])
+                return data, selected["name"]
+            else:
+                print("Opción no válida. Por favor, intenta de nuevo.")
