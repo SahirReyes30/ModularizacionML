@@ -14,10 +14,10 @@ def main():
     preprocessor = Preprocess()
     
     if dataType in ["iris", "wine", "breast_cancer", "mnist"]:
-        X_train, X_test, y_train, y_test = preprocess_data(raw_data, dataType)
+        X_train, X_test, y_train, y_test = preprocessor.preprocess_data(raw_data, dataType)
         print(f"Dataset {dataType} procesado correctamente para modelos supervisados.")
     elif dataType == "mall":
-        processed_data = preprocess_data(raw_data, dataType)
+        processed_data = preprocessor.preprocess_data(raw_data, dataType)
         print("Dataset Mall Customers procesado correctamente para clustering (KMeans).")
 
     # Paso 3: Entrenar el modelo
