@@ -1,7 +1,7 @@
 from data_loader import DataLoader
 from preprocess import Preprocess
-from train_model import train_model
-from evaluate import evaluate_model
+from train_model import TrainModel
+from evaluate import EvaluateModel
 
 
 def main():
@@ -21,10 +21,13 @@ def main():
         print("Dataset Mall Customers procesado correctamente para clustering (KMeans).")
 
     # Paso 3: Entrenar el modelo
-    model = train_model(X_train, y_train)
+    train_model = TrainModel()
+    model = train_model.train_model(X_train, y_train)
+   
 
     # Paso 4: Evaluar el modelo
-    accuracy = evaluate_model(model, X_test, y_test)
+    evaluate_model = EvaluateModel()
+    accuracy = evaluate_model.evaluate_model(model, X_test, y_test)
 
     print(f"Accuracy del modelo: {accuracy:.2f}")
 
